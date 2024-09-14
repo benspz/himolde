@@ -13,7 +13,9 @@ def right_ball(n, length):
         right(angle)
 
 def shaft_right(length):
-    setpos(20, -45)
+    penup()
+    setpos(70, -45)
+    pendown()
     forward(length)
 
 def shaft_tip(n, length, angle):
@@ -23,14 +25,16 @@ def shaft_tip(n, length, angle):
 
 def shaft_left(length):
     forward(length)
+    penup()
     home()
+    pendown()
 
 def penis():
     left_ball(100, 5)
     right_ball(100, 5)
     shaft_right(500)
     shaft_tip(9,15, 20)
-    shaft_left(500)
+    shaft_left(515)
 
 penis()
 exitonclick()

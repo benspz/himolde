@@ -9,11 +9,18 @@ import time
 
 start = time.perf_counter()
 
-print("Velkommen til Mitt Skall v0.01")
+print("Velkommen til Mitt Skall v0.02")
 kmd = ""
 prompt = ">>"
+forrige_kmd = ""
 while kmd != "avslutt":
     kmd = input(prompt)
+
+    if kmd == "p" and forrige_kmd != "":
+        kmd = forrige_kmd
+        print("Utfører forrige kommando: " + kmd)
+
+    forrige_kmd = kmd
 
     if kmd == "avslutt":
         print("Takk og farvel!")
@@ -28,7 +35,7 @@ while kmd != "avslutt":
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, "
-              "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks")
+                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks")
         print("For å avslutte dette programmet, skriv 'avslutt'")
 
     elif kmd == "vismappe":
@@ -84,6 +91,7 @@ while kmd != "avslutt":
     elif kmd == "statiskboks":
         for i in range(0, 4):
             print("*" * 4)
+
 
     else:
         print("Ukjent kommando")
