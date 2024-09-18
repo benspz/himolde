@@ -35,7 +35,7 @@ while kmd != "avslutt":
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, "
-                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks")
+                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks og p")
         print("For å avslutte dette programmet, skriv 'avslutt'")
 
     elif kmd == "vismappe":
@@ -96,4 +96,3 @@ while kmd != "avslutt":
     else:
         print("Ukjent kommando")
         print("Skriv 'hjelp' for å se tilgjengelige kommandoer")
-
