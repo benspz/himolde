@@ -35,8 +35,8 @@ while kmd != "avslutt":
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, "
-                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks og p")
-        print("For å avslutte dette programmet, skriv 'avslutt'")
+                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks, åpenboks, rombe, seil, og pyramide")
+        print("For å avslutte dette programmet, skriv 'avslutt' eller 'p' for å kjøre forrige kommando")
 
     elif kmd == "vismappe":
         print(os.getcwd())
@@ -92,6 +92,42 @@ while kmd != "avslutt":
         for i in range(0, 4):
             print("*" * 4)
 
+    elif kmd == "rombe":
+        def rombe(tegn, høyde, bredde):
+            for i in range(høyde):
+                print(" " * i + (tegn * int(bredde)))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        bredde = input("Velg bredde >> ")
+        rombe(tegn, int(høyde), int(bredde))
+
+    elif kmd == "åpenboks":
+        def åpenboks(tegn, høyde, bredde):
+            print(tegn * int(bredde))
+            for x in range(int(høyde) - 2):
+                print(tegn + " " * (int(bredde) - 2) + tegn)
+            print(tegn * int(bredde))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        bredde = input("Velg bredde >> ")
+        åpenboks(tegn, int(høyde), int(bredde))
+
+    elif kmd == "seil":
+        def tegnseil(tegn, høyde):
+            for x in range(int(høyde)):
+                print(tegn * (x + 1))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        tegnseil(tegn, int(høyde))
+
+    elif kmd == "pyramide":
+        def pyramide(tegn, høyde):
+            for x in range(int(høyde)):
+                innrykk = (høyde - int(x)) / 2
+                print(" " * int(innrykk) + (tegn * (x + 1)))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        pyramide(tegn, int(høyde))
 
     else:
         print("Ukjent kommando")
