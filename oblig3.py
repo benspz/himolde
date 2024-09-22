@@ -29,48 +29,86 @@ print(innafor("kake", 20, 70))
 #---------Deloppgave 2--------------------------------------------------------
 
 def countdownPar(n):
-    if n == 0:
-        print("Blastoff!")
-    else:
-        if n % 2 == 0:
-            print(n)
-            countdownPar(n-1)
-        else:
-            countdownPar(n-1)
-
-
-
-def countdownOdde(n):
-    if n == 0:
-        print("Blastoff!")
-    else:
-        if n % 2 != 0:
-            print(n)
-            countdownOdde(n-1)
-        else:
-            countdownOdde(n-1)
-
-
-def countdown2(n, parFlagg):
-    if parFlagg:
+    if n > 0:
         if n == 0:
             print("Blastoff!")
         else:
             if n % 2 == 0:
                 print(n)
-                countdown2(n-1, True)
+                countdownPar(n-1)
             else:
-                countdown2(n-1, True)
+                countdownPar(n-1)
+    else:
+        if n == 0:
+            print("Blastoff!")
+        else:
+            if n % 2 == 0:
+                print(n)
+                countdownPar(n+1)
+            else:
+                countdownPar(n+1)
+
+
+def countdownOdde(n):
+    if n > 0:
+        if n == 0:
+            print("Blastoff!")
+        else:
+            if n % 2 != 0:
+                print(n)
+                countdownOdde(n-1)
+            else:
+                countdownOdde(n-1)
     else:
         if n == 0:
             print("Blastoff!")
         else:
             if n % 2 != 0:
                 print(n)
-                countdown2(n-1, False)
+                countdownOdde(n+1)
             else:
-                countdown2(n-1, False)
+                countdownOdde(n+1)
 
+
+def countdown2(n, parFlagg):
+    if n > 0:
+        if parFlagg:
+            if n == 0:
+                print("Blastoff!")
+            else:
+                if n % 2 == 0:
+                    print(n)
+                    countdown2(n-1, True)
+                else:
+                    countdown2(n-1, True)
+        else:
+            if n == 0:
+                print("Blastoff!")
+            else:
+                if n % 2 != 0:
+                    print(n)
+                    countdown2(n-1, False)
+                else:
+                    countdown2(n-1, False)
+    else:
+        if parFlagg:
+            if n == 0:
+                print("Blastoff!")
+            else:
+                if n % 2 == 0:
+                    print(n)
+                    countdown2(n+1, True)
+                else:
+                    countdown2(n+1, True)
+        else:
+            if n == 0:
+                print("Blastoff!")
+            else:
+                if n % 2 != 0:
+                    print(n)
+                    countdown2(n+1, False)
+                else:
+                    countdown2(n+1, False)
 
 print("\nTest av countdownOdde(6)")
 countdownOdde(6)
@@ -80,3 +118,6 @@ print("\nTest av countdown2(10, True)")
 countdown2(10, True)
 print("\nTest av countdown2(3, False)")
 countdown2(3, False)
+
+
+#---------Deloppgave 3--------------------------------------------------------
