@@ -40,97 +40,78 @@ def countdown(n):
 
 
 def countdownPar(n):
-    if n > 0:
-        if n == 0:
-            print("Blastoff!")
+    if n == 0:
+        print("Blastoff!")
+    elif n > 0:
+        if n % 2 == 0:
+            print(n)
+            countdownPar(n - 1)
         else:
-            if n % 2 == 0:
-                print(n)
-                countdownPar(n - 1)
-            else:
-                countdownPar(n - 1)
+            countdownPar(n - 1)
     else:
-        if n == 0:
-            print("Blastoff!")
+        if n % 2 == 0:
+            print(n)
+            countdownPar(n + 1)
         else:
-            if n % 2 == 0:
-                print(n)
-                countdownPar(n + 1)
-            else:
-                countdownPar(n + 1)
-
+            countdownPar(n + 1)
 
 def countdownOdde(n):
-    if n > 0:
-        if n == 0:
-            print("Blastoff!")
+    if n == 0:
+        print("Blastoff!")
+    elif n > 0:
+        if n % 2 != 0:
+            print(n)
+            countdownOdde(n - 1)
         else:
-            if n % 2 != 0:
-                print(n)
-                countdownOdde(n - 1)
-            else:
-                countdownOdde(n - 1)
+            countdownOdde(n - 1)
     else:
-        if n == 0:
-            print("Blastoff!")
+        if n % 2 != 0:
+            print(n)
+            countdownOdde(n + 1)
         else:
-            if n % 2 != 0:
-                print(n)
-                countdownOdde(n + 1)
-            else:
-                countdownOdde(n + 1)
+            countdownOdde(n + 1)
 
 
 def countdown2(n, parFlagg):
-    if n > 0:
-        if parFlagg:
-            if n == 0:
-                print("Blastoff!")
+    if n == 0:
+        print("Blastoff!")
+    elif parFlagg:
+        if n > 0:
+            if n % 2 == 0:
+                print(n)
+                countdown2(n - 1, True)
             else:
-                if n % 2 == 0:
-                    print(n)
-                    countdown2(n - 1, True)
-                else:
-                    countdown2(n - 1, True)
+                countdown2(n - 1, True)
         else:
-            if n == 0:
-                print("Blastoff!")
+            if n % 2 == 0:
+                print(n)
+                countdown2(n + 1, True)
             else:
-                if n % 2 != 0:
-                    print(n)
-                    countdown2(n - 1, False)
-                else:
-                    countdown2(n - 1, False)
+                countdown2(n + 1, True)
     else:
-        if parFlagg:
-            if n == 0:
-                print("Blastoff!")
+        if n > 0:
+            if n % 2 != 0:
+                print(n)
+                countdown2(n - 1, False)
             else:
-                if n % 2 == 0:
-                    print(n)
-                    countdown2(n + 1, True)
-                else:
-                    countdown2(n + 1, True)
+                countdown2(n - 1, False)
         else:
-            if n == 0:
-                print("Blastoff!")
+            if n % 2 != 0:
+                print(n)
+                countdown2(n + 1, False)
             else:
-                if n % 2 != 0:
-                    print(n)
-                    countdown2(n + 1, False)
-                else:
-                    countdown2(n + 1, False)
+                countdown2(n + 1, False)
 
 
 print("\nTest av countdown(6)")
 countdown(6)
-print("\nTest av countdownOdde(6)")
-countdownOdde(6)
 print("\nTest av countdownPar(6)")
 countdownPar(6)
-print("\nTest av countdown2(10, True)")
+print("\nTest av countdownOdde(6)")
+countdownOdde(6)
+print("\nTest av countdown2(6, True)")
 countdown2(6, True)
-print("\nTest av countdown2(3, False)")
+print("\nTest av countdown2(6, False)")
 countdown2(6, False)
 
 
