@@ -8,9 +8,9 @@ def erTall(a, b, c):
 
 def innafor(x, fra, til):
     if erTall(x, fra, til):
-        if fra <= til:
+        if fra <= til:  #Stigende
             return fra <= x <= til
-        elif fra >= til:
+        elif fra >= til:  #Fallende
             return til <= x <= fra
     else:
         return False
@@ -31,10 +31,10 @@ print(innafor("kake", 20, 70))
 def countdown(n):
     if n == 0:
         print("Blastoff!")
-    elif n > 0:
+    elif n > 0:   #Positiv
         print(n)
         countdown(n - 1)
-    else:
+    else:        #Negativ
         print(n)
         countdown(n + 1)
 
@@ -42,13 +42,13 @@ def countdown(n):
 def countdownPar(n):
     if n == 0:
         print("Blastoff!")
-    elif n > 0:
+    elif n > 0:     #Positiv
         if n % 2 == 0:
             print(n)
             countdownPar(n - 1)
         else:
             countdownPar(n - 1)
-    else:
+    else:           #Negativ
         if n % 2 == 0:
             print(n)
             countdownPar(n + 1)
@@ -58,14 +58,14 @@ def countdownPar(n):
 def countdownOdde(n):
     if n == 0:
         print("Blastoff!")
-    elif n > 0:
+    elif n > 0:    #Positiv
         if n % 2 != 0:
             print(n)
             countdownOdde(n - 1)
         else:
             countdownOdde(n - 1)
-    else:
-        if n % 2 != 0:
+    else:        #Negativ
+        if n % 2 != 0:    #Negativ
             print(n)
             countdownOdde(n + 1)
         else:
@@ -75,27 +75,27 @@ def countdownOdde(n):
 def countdown2(n, parFlagg):
     if n == 0:
         print("Blastoff!")
-    elif parFlagg:
-        if n > 0:
+    elif parFlagg:   #Partall
+        if n > 0:       #Positiv
             if n % 2 == 0:
                 print(n)
                 countdown2(n - 1, True)
             else:
                 countdown2(n - 1, True)
-        else:
+        else:           #Negativ
             if n % 2 == 0:
                 print(n)
                 countdown2(n + 1, True)
             else:
                 countdown2(n + 1, True)
-    else:
-        if n > 0:
+    else:            #Oddetall
+        if n > 0:       #Positiv
             if n % 2 != 0:
                 print(n)
                 countdown2(n - 1, False)
             else:
                 countdown2(n - 1, False)
-        else:
+        else:           #Negativ
             if n % 2 != 0:
                 print(n)
                 countdown2(n + 1, False)
