@@ -120,10 +120,7 @@ countdown2(6, False)
 def boksInnenfor(a, b, c, x, y, z):
     measurements = [a, b, c]  # https://www.w3schools.com/python/python_lists_sort.asp
     measurements.sort(reverse=True)
-    if measurements[0] <= x and measurements[1] <= y and measurements[2] <= z:
-        return True
-    else:
-        return False
+    return measurements[0] <= x and measurements[1] <= y and measurements[2] <= z
 
 
 print("\nTest av boksInnenfor(90, 20, 50, 100, 30, 20)")

@@ -81,12 +81,11 @@ while kmd != "avslutt":
 
     elif kmd == "dynamiskboks":
         n = input("Oppgi antall linjer/kolonner >> ")
-        x = ""
-        def tegnboks(x):
+        def tegnboks():
             x = input("Velg tegn >> ")
             for i in range(int(n)):
                 print(str(x) * int(n))
-        tegnboks(x)
+        tegnboks()
 
     elif kmd == "statiskboks":
         for i in range(0, 4):
