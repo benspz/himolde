@@ -1,12 +1,12 @@
 import  os
 
-#Sjekker om platform er Windows eller Mac/Linux
-if os.name == 'nt': split_mod = ";"
-else: split_mod = ":"
-
 def finn_app(app):
+    # Sjekker om platform er Windows eller Mac/Linux
+    if os.name == 'nt': delimiter = ";"
+    else:
+        delimiter = ":"
     funnet = False
-    path = os.environ['PATH'].split(split_mod)
+    path = os.environ['PATH'].split(delimiter)
     try:
         for dir in path:
             if app in os.listdir(dir):
