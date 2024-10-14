@@ -31,7 +31,7 @@ while kmd != "avslutt":
         print(tid)
 
     elif kmd == "om":
-        print("mittskall.py av Benjamin Espeseth v0.01 September 2024")
+        print("mittskall.py av Benjamin Espeseth v0.02 September 2024")
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, "
