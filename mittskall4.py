@@ -1,17 +1,16 @@
 # IBE152 H24 Oblig 4
 # Skrevet av Benjamin Espeseth
 
+import sys
 import os
 import datetime
 import time
 import platform
 import subprocess
 
-from visfiler2 import nytt_antall
-
 start = time.perf_counter()
 
-#------Function definitions---------------------------------------------
+#------Function definitions--------------------------------------------------
 
 def vistid():
     tid = datetime.datetime.now()
@@ -134,10 +133,91 @@ def vispath2():
     for mappe in os.environ['PATH'].split(":"): print(mappe)
 
 def finnprogram():
-    pass
+    # Sjekker om platform er Windows eller Mac/Linux
+    path = os.environ['PATH'].split(";" if os.name == 'nt' else ":")
+    app = input("Velg app: >> ")
+    for dir in path:
+        try:
+            if app in os.listdir(dir):
+                print(f"{app} funnet i: {dir}")
+                break
+        except FileNotFoundError:
+            continue
+    else:
+        print("Fant ikke program")
 
 def åpne():
-    pass
+    fil = input("Velg fil: >> ")
+    try:
+        if platform.system() == 'Windows':
+            os.startfile(fil)
+        elif platform.system() == 'Darwin':
+            subprocess.run(["open", fil], check=True)
+        else:
+            subprocess.run(["xdg-open", fil], check=True)
+    except Exception as e:
+        print(f"Klarer ikke åpne fil: {e}")
 
 def finn():
-    pass
+    søketekst = input("Hva leter du etter? >> ")
+    søkemappe = input("Hvor skal søket starte? >> ")
+    org_pos = os.getcwd()
+    os.chdir(søkemappe)
+    mapper = os.listdir()
+    if søketekst in mapper:
+        print(os.getcwd() + "/" + søketekst)
+        return
+    for mappe in mapper:
+        if os.path.isdir(mappe):
+            vistreff(søketekst, mappe)
+    os.chdir(org_pos)
+
+def avslutt():
+    sys.exit()
+
+
+#------Kommandoer-------------------------------------------------------------
+
+kommandoer = {
+    "vistid": vistid,
+    "vismappe": vismappe,
+    "visfiler": visfiler,
+    "byttmappe": byttmappe,
+    "hvorlenge": hvorlenge,
+    "om": om,
+    "vismiljø": vismiljø,
+    "visbrukernavn": visbrukernavn,
+    "vispath": vispath,
+    "nyprompt": nyprompt,
+    "kakeplanleger": kakeplanlegger,
+    "statiskboks": statiskboks,
+    "dynamiskboks": dynamiskboks,
+    "åpenboks": åpenboks,
+    "rombe": rombe,
+    "seil": seil,
+    "pyramide": pyramide,
+    "innafor": innafor,
+    "visfiler2": visfiler2,
+    "regnut": regnut,
+    "finn": finn,
+    "finnprogram": finnprogram,
+    "vismiljø2": vismiljø2,
+    "vispath2": vispath2,
+    "åpne": åpne,
+    "hjelp": hjelp,
+    "avslutt": avslutt,
+}
+
+#------init_variabler-------------------------------------------------------------
+
+kommando = ""
+forrige_kmd = ""
+prompt = ">> "
+
+
+#------Hovedprogram---------------------------------------------------------------
+
+while True:
+    kommando = input(prompt)
+    if kommando in kommandoer:
+        kommandoer[kommando]()
