@@ -12,7 +12,7 @@ while  antall < len(filer):
     if antall == nytt_antall + 20:
         nytt_antall = antall
         svar = input(f"\nHar vist {antall} filer av {len(filer)}, vil du fortsette? (y/n) >> ")
-        if svar != "y".lower():
+        if svar.lower() != "y":
             break
     elif antall >= len(filer):
         print(f"\nHar vist alle {len(filer)} filer")

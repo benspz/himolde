@@ -8,7 +8,12 @@ import time
 import platform
 import subprocess
 
+#------init_variabler-------------------------------------------------------------
+
 start = time.perf_counter()
+kommando = ""
+forrige_kmd = ""
+prompt = ">> "
 
 #------Function definitions--------------------------------------------------
 
@@ -130,7 +135,7 @@ def vismiljø2():
         print(f"{key}: {os.environ[key]}")
 
 def vispath2():
-    for mappe in os.environ['PATH'].split(":"): print(mappe)
+    for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"): print(mappe)
 
 def finnprogram():
     # Sjekker om platform er Windows eller Mac/Linux
@@ -169,11 +174,16 @@ def finn():
         return
     for mappe in mapper:
         if os.path.isdir(mappe):
-            vistreff(søketekst, mappe)
+            finn()
     os.chdir(org_pos)
 
 def avslutt():
     sys.exit()
+
+def kjør_forrige():
+    if kommando == "p" and forrige_kmd != "":
+        kommando = forrige_kmd
+        print("Utfører forrige kommando: " + kommando)
 
 
 #------Kommandoer-------------------------------------------------------------
@@ -206,18 +216,14 @@ kommandoer = {
     "åpne": åpne,
     "hjelp": hjelp,
     "avslutt": avslutt,
+    "p": kjør_forrige,
 }
-
-#------init_variabler-------------------------------------------------------------
-
-kommando = ""
-forrige_kmd = ""
-prompt = ">> "
-
 
 #------Hovedprogram---------------------------------------------------------------
 
-while True:
-    kommando = input(prompt)
-    if kommando in kommandoer:
-        kommandoer[kommando]()
+if __name__ == "__main__":
+    while True:
+        kommando = input(prompt)
+        if kommando in kommandoer:
+            kommandoer[kommando]()
+        forrige_kmd = kommando
