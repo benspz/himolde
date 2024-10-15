@@ -135,6 +135,7 @@ def vismiljø2():
         print(f"{key}: {os.environ[key]}")
 
 def vispath2():
+    # Sjekker om platform er Windows eller Mac/Linux
     for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"): print(mappe)
 
 def finnprogram():
@@ -223,6 +224,7 @@ kommandoer = {
 
 if __name__ == "__main__":
     while True:
+        global kommando
         kommando = input(prompt)
         if kommando in kommandoer:
             kommandoer[kommando]()
