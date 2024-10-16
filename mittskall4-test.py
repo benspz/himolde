@@ -37,9 +37,11 @@ while kmd != "avslutt":
         print("mittskall.py av Benjamin Espeseth v0.02 September 2024")
 
     elif kmd == "hjelp":
-        print("Tilgjengelige kommandoer er: om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, "
-                  "visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks, åpenboks, rombe, seil, og pyramide")
-        print("For å avslutte dette programmet, skriv 'avslutt' eller 'p' for å kjøre forrige kommando")
+        print("Tilgjengelige kommandoer er: ")
+        print("om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, ")
+        print("visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks, åpenboks, rombe, seil, pyramide, ")
+        print("innafor, visfiler2, regnut, vismiljø2, vispath2, finnprogram, åpne, finn")
+        print("\nFor å avslutte dette programmet, skriv 'avslutt' eller 'p' for å kjøre forrige kommando")
 
     elif kmd == "vismappe":
         print(os.getcwd())
@@ -132,7 +134,7 @@ while kmd != "avslutt":
         pyramide(tegn, int(høyde))
 
     elif kmd == "innafor":           #Bruker Try Except Else istedenfor erTall() for å unngå error.
-        def innafor(x, fra, til):
+        def innafor(x, fra, til):    #erTall() blir overflødig da vi må caste input() før vi kaller på innafor()
             if fra <= til:  # Stigende
                 return fra <= x <= til
             elif fra >= til:  # Fallende
@@ -154,9 +156,8 @@ while kmd != "avslutt":
         while antall < len(filer):
             print(filer[antall])
             antall += 1
-
-            if antall == nytt_antall + 20:
-                nytt_antall = antall
+            if antall == nytt_antall + 20: # Stopp etter 20 filer
+                nytt_antall = antall    # Legg til 20, slik at neste gang stopper den på 40
                 svar = input(f"\nHar vist {antall} filer av {len(filer)}, vil du fortsette? (y/n) >> ")
                 if svar.lower() == "n":
                     break
@@ -171,7 +172,7 @@ while kmd != "avslutt":
 
     elif kmd == "vismiljø2":
         for key in os.environ:
-            print(f"{key}: {os.environ[key]}")
+            print(f"{key}: {os.environ[key]}")  #Printer ut alle key:value par i os.environ
 
     elif kmd == "vispath2":
         #Bruker os.name for å sjekke om det er Windows eller Mac/Linux.
@@ -201,12 +202,13 @@ while kmd != "avslutt":
         def åpne_fil(fil):
             #Bruker platform modulen her da os.name ikke differensierer mellom MacOS og Linux
             #https://chatgpt.com/share/be7f8a4d-db2b-4706-921e-287a30a15bf9
+            #https://docs.python.org/3/library/subprocess.html
             try:
                 if platform.system() == 'Windows':
                     os.startfile(fil)
-                elif platform.system() == 'Darwin':
+                elif platform.system() == 'Darwin':   # MacOS
                     subprocess.run(["open", fil], check=True)
-                else:
+                else:                                 # Linux
                     subprocess.run(["xdg-open", fil], check=True)
             except Exception as e:
                 print(f"Klarer ikke åpne fil: {e}")
@@ -217,12 +219,12 @@ while kmd != "avslutt":
     elif kmd == "finn":
         def vistreff(søketekst, søkemappe):
             org_pos = os.getcwd()  #lagrer original posisjon
-            os.chdir(søkemappe)
+            os.chdir(søkemappe)    #cd inn i søkemappe i tilfelle bruker skriver relativ sti istedenfor absolutt.
             mapper = os.listdir()
-            if søketekst in mapper:
+            if søketekst in mapper:  #sjekk om fil er i nåværende mappe
                 print(os.getcwd() + ("/" if os.name != "nt" else "\\") + søketekst)
                 return
-            for mappe in mapper:
+            for mappe in mapper:     #rekursivt sjekk alle undermapper.
                 if os.path.isdir(mappe):
                     vistreff(søketekst, mappe)
             os.chdir(org_pos)
@@ -232,6 +234,8 @@ while kmd != "avslutt":
             vistreff(input("Filnavn: >> "), input("Startmappe: >> "))
         except PermissionError:
             print("Ingen tilgang")
+
+
     else:
         print("Ukjent kommando")
         print("Skriv 'hjelp' for å se tilgjengelige kommandoer")
