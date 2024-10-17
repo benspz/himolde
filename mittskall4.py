@@ -1,231 +1,241 @@
-# IBE152 H24 Oblig 4
+# IBE152 H24 Oblig 2
 # Skrevet av Benjamin Espeseth
 
-import sys
-import os
 import datetime
+import os
+#Brukt info fra: https://www.w3schools.com/python/module_os.asp
 import time
+#Brukt info fra: https://docs.python.org/3/library/time.html#time.perf_counter
 import platform
 import subprocess
 
-#------init_variabler-------------------------------------------------------------
 
 start = time.perf_counter()
-kommando = ""
-forrige_kmd = ""
+
+print("Velkommen til Mitt Skall v0.02")
+kmd = ""
 prompt = ">> "
+forrige_kmd = ""
+while kmd != "avslutt":
+    kmd = input(prompt)
 
-#------Function definitions--------------------------------------------------
+    if kmd == "p" and forrige_kmd != "":
+        kmd = forrige_kmd
+        print("Utfører forrige kommando: " + kmd)
 
-def vistid():
-    tid = datetime.datetime.now()
-    print(f"Dato og klokkeslett er: {tid}")
+    forrige_kmd = kmd
 
-def om():
-    print("Mitt Skall v.0.04, Oktober 2024 av Benjamin Espeseth")
+    if kmd == "avslutt":
+        print("Takk og farvel!")
 
-def hjelp():
-    pass
+    elif kmd == "vistid":
+        print("Dato og klokkeslett er:")
+        tid = datetime.datetime.now()
+        print(tid)
 
-def vismappe():
-    print("os.getcwd()")
+    elif kmd == "om":
+        print("mittskall.py av Benjamin Espeseth v0.02 September 2024")
 
-def byttmappe():
-    print(f"Nåværende mappe er: {os.getcwd()}")
-    nymappe = input("Hvilken mappe vil du bytte til? >> ")
-    os.chdir(nymappe)
-    print(f"Ny mappe er {nymappe}")
+    elif kmd == "hjelp":
+        print("Tilgjengelige kommandoer er: ")
+        print("om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, ")
+        print("visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks, åpenboks, rombe, seil, pyramide, ")
+        print("innafor, visfiler2, regnut, vismiljø2, vispath2, finnprogram, åpne, finn")
+        print("\nFor å avslutte dette programmet, skriv 'avslutt' eller 'p' for å kjøre forrige kommando")
 
-def visfiler():
-    print(os.listdir())
+    elif kmd == "vismappe":
+        print(os.getcwd())
 
-def vismiljø():
-    print(os.environ)
+    elif kmd == "byttmappe":
+        print("Nåværende mapper er:", os.getcwd())
+        nymappe = input("Hvilken mappe vil du bytte til? >>")
+        os.chdir(nymappe)
+        print("Ny mappe er:", os.getcwd())
 
-def visbrukernavn():
-    print(os.environ['USERNAME'])
+    elif kmd == "visfiler":
+        print(os.listdir())
 
-def vispath():
-    print(os.environ['PATH'])
+    elif kmd == "vismiljø":
+        print(os.environ)
 
-def nyprompt():
-    prompt = input("Oppgi ny prompt: ")
-    print("Ny prompt er", prompt)
+    elif kmd == "visbrukernavn":
+        print(os.environ['USERNAME'])
 
-def hvorlenge():
-    stop = time.perf_counter()
-    totaltid = stop - start
-    timer = int(totaltid) // 3600
-    minutter = int((totaltid % 3600) // 60)
-    sekunder = int(totaltid % 60)
-    print("Dette programmet har kjørt i", timer, "timer", minutter, "minutter og", sekunder, "sekunder.")
+    elif kmd == "vispath":
+        print(os.environ['PATH'])
 
-def kakeplanlegger():
-    gjester = input("Hvor mange gjester kommer? >> ")
-    kakestykker = input("Hvor mange stykker er det i hver kake? >> ")
-    kaker = (int(gjester) + int(kakestykker) - 1) // int(kakestykker)
-    print("Du må lage", kaker, "kaker")
-    # Fikk hjelp til matten fra:
-    # https://www.reddit.com/r/C_Programming/comments/gqpuef/how_to_round_up_the_answer_of_an_integer_division/
+    elif kmd == "nyprompt":
+        prompt = input("Oppgi ny prompt: ")
+        print("Ny prompt er", prompt)
 
-def statiskboks():
-    for i in range(0, 4):
-        print("*" * 4)
+    elif kmd == "hvorlenge":
+        stop = time.perf_counter()
+        totaltid = stop-start
+        timer = int(totaltid) // 3600
+        minutter = int((totaltid % 3600) // 60)
+        sekunder = int(totaltid % 60)
+        print("Dette programmet har kjørt i", timer, "timer", minutter, "minutter og", sekunder, "sekunder.")
 
-def dynamiskboks():
-    n = input("Oppgi antall linjer/kolonner >> ")
-    x = input("Velg tegn >> ")
-    for i in range(int(n)):
-        print(str(x)*int(n))
+    elif kmd == "kakeplanlegger":
+        gjester = input("Hvor mange gjester kommer? >> ")
+        kakestykker = input("Hvor mange stykker er det i hver kake? >> ")
+        kaker = (int(gjester) + int(kakestykker) - 1) // int(kakestykker)
+        print("Du må lage", kaker, "kaker")
+        # Fikk hjelp til matten fra:
+        # https://www.reddit.com/r/C_Programming/comments/gqpuef/how_to_round_up_the_answer_of_an_integer_division/
 
-def åpenboks(tegn, høyde, bredde):
-    print(tegn * int(bredde))
-    for x in range(int(høyde) - 2):
-        print(tegn + " " * (int(bredde) - 2) + tegn)
-    print(tegn * int(bredde))
+    elif kmd == "dynamiskboks":
+        n = input("Oppgi antall linjer/kolonner >> ")
+        def tegnboks():
+            x = input("Velg tegn >> ")
+            for i in range(int(n)):
+                print(str(x) * int(n))
+        tegnboks()
 
-def rombe(tegn, høyde, bredde):
-    for i in range(høyde):
-        print(" " * i + (tegn * int(bredde)))
+    elif kmd == "statiskboks":
+        for i in range(0, 4):
+            print("*" * 4)
 
-def seil(tegn, høyde):
-    for x in range(int(høyde)):
-        print(tegn * (x + 1))
+    elif kmd == "rombe":
+        def rombe(tegn, høyde, bredde):
+            for i in range(høyde):
+                print(" " * i + (tegn * int(bredde)))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        bredde = input("Velg bredde >> ")
+        rombe(tegn, int(høyde), int(bredde))
 
-def pyramide(tegn, høyde):
-    for x in range(int(høyde)):
-        innrykk = (høyde - int(x)) / 2
-        print(" " * int(innrykk) + (tegn * (x + 1)))
+    elif kmd == "åpenboks":
+        def åpenboks(tegn, høyde, bredde):
+            print(tegn * int(bredde))
+            for x in range(int(høyde) - 2):
+                print(tegn + " " * (int(bredde) - 2) + tegn)
+            print(tegn * int(bredde))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        bredde = input("Velg bredde >> ")
+        åpenboks(tegn, int(høyde), int(bredde))
 
-def erTall(a, b, c):
-    return isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float))
+    elif kmd == "seil":
+        def tegnseil(tegn, høyde):
+            for x in range(int(høyde)):
+                print(tegn * (x + 1))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        tegnseil(tegn, int(høyde))
 
-def innafor(x, fra, til):
-    if erTall(x, fra, til):
-        if fra <= til:  # Stigende
-            return fra <= x <= til
-        elif fra >= til:  # Fallende
-            return til <= x <= fra
-    else:
-        return False
+    elif kmd == "pyramide":
+        def pyramide(tegn, høyde):
+            for x in range(int(høyde)):
+                innrykk = (høyde - int(x)) / 2
+                print(" " * int(innrykk) + (tegn * (x + 1)))
+        tegn = input("Velg tegn >> ")
+        høyde = input("Velg høyde >> ")
+        pyramide(tegn, int(høyde))
 
-def visfiler2():
-    filer = os.listdir()
-    antall = 0
-    nytt_antall = 0
-    while antall < len(filer):
-        print(filer[antall])
-        antall += 1
-        if antall == nytt_antall + 20:
-            nytt_antall = antall
-            svar = input(f"\nHar vist {antall} filer av {len(filer)}, vil du fortsette? (y/n) >> ")
-            if svar.lower() != "y":
-                break
-        elif antall >= len(filer):
-            print(f"\nHar vist alle {len(filer)} filer")
-            break
+    elif kmd == "innafor":           #Bruker Try Except Else istedenfor erTall() for å unngå error.
+        def innafor(x, fra, til):    #erTall() blir overflødig da vi må caste input() før vi kaller på innafor()
+            if fra <= til:  # Stigende
+                return fra <= x <= til
+            elif fra >= til:  # Fallende
+                return til <= x <= fra
 
-def regnut():
-    uttrykk: str = input("Oppgi  uttrykk: >> ")
-    try: print(eval(uttrykk))
-    except NameError: print("Kun numeriske verdier støttet")
-
-def vismiljø2():
-    for key in os.environ:
-        print(f"{key}: {os.environ[key]}")
-
-def vispath2():
-    # Sjekker om platform er Windows eller Mac/Linux
-    for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"): print(mappe)
-
-def finnprogram():
-    # Sjekker om platform er Windows eller Mac/Linux
-    path = os.environ['PATH'].split(";" if os.name == 'nt' else ":")
-    app = input("Velg app: >> ")
-    for dir in path:
-        try:
-            if app in os.listdir(dir):
-                print(f"{app} funnet i: {dir}")
-                break
-        except FileNotFoundError:
-            continue
-    else:
-        print("Fant ikke program")
-
-def åpne():
-    fil = input("Velg fil: >> ")
-    try:
-        if platform.system() == 'Windows':
-            os.startfile(fil)
-        elif platform.system() == 'Darwin':
-            subprocess.run(["open", fil], check=True)
+        try: x, fra, til = float(input("Velg tall >> ")), float(input("Velg tall >> ")), float(input("Velg tall >> "))
+        except ValueError: print("Kun numeriske verdier støttet!")
         else:
-            subprocess.run(["xdg-open", fil], check=True)
-    except Exception as e:
-        print(f"Klarer ikke åpne fil: {e}")
+            if innafor(x, fra, til): print("Innafor")
+            else: print("Ikke innafor")
 
-def finn():
-    søketekst = input("Hva leter du etter? >> ")
-    søkemappe = input("Hvor skal søket starte? >> ")
-    org_pos = os.getcwd()
-    os.chdir(søkemappe)
-    mapper = os.listdir()
-    if søketekst in mapper:
-        print(os.getcwd() + "/" + søketekst)
-        return
-    for mappe in mapper:
-        if os.path.isdir(mappe):
-            finn()
-    os.chdir(org_pos)
+    elif kmd == "visfiler2":
+        filer = os.listdir()
+        #filer = [f"Item {i + 1}" for i in range(50)]
+        #https://www.w3schools.com/python/python_lists_comprehension.asp
+        #brukt for testing da jeg ikke har noen mapper med så mange filer : )
+        antall = 0
+        nytt_antall = 0
+        while antall < len(filer):
+            print(filer[antall])
+            antall += 1
+            if antall == nytt_antall + 20: # Stopp etter 20 filer
+                nytt_antall = antall    # Legg til 20, slik at neste gang stopper den på 40
+                svar = input(f"\nHar vist {antall} filer av {len(filer)}, vil du fortsette? (y/n) >> ")
+                if svar.lower() == "n":
+                    break
+            elif antall >= len(filer):
+                print(f"\nHar vist alle {len(filer)} filer")
+                break
 
-def avslutt():
-    sys.exit()
+    elif kmd == "regnut":
+        uttrykk: str = input("Oppgi  uttrykk: >> ")
+        try: print(eval(uttrykk))
+        except NameError: print("Kun numeriske verdier støttet")
 
-def kjør_forrige():
-    if kommando == "p" and forrige_kmd != "":
-        kommando = forrige_kmd
-        print("Utfører forrige kommando: " + kommando)
+    elif kmd == "vismiljø2":
+        for key in os.environ:
+            print(f"{key}: {os.environ[key]}")  #Printer ut alle key:value par i os.environ
+
+    elif kmd == "vispath2":
+        #Bruker os.name for å sjekke om det er Windows eller Mac/Linux.
+        for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"): print(mappe)
+
+    elif kmd == "finnprogram":
+        def finn_program(program):
+            # Sjekker om platform er Windows eller Mac/Linux
+            path = os.environ['PATH'].split(";" if os.name == 'nt' else ":")
+            funnet = False
+            for mappe in path:
+                try:
+                    if program in os.listdir(mappe):
+                        print(f"{program} funnet i: {mappe}")
+                        funnet = True
+                        #break
+                        #Brøyt loop originalt her da den alltid la til "fant ikke program" på slutten.
+                        #Men endte opp med en "funnet" tag som sjekker om en eller flere har blitt funnet.
+                except FileNotFoundError:
+                    continue
+            else:
+                if not funnet: print("Fant ikke program")
+
+        finn_program(input("Hvilket program leter du etter? >> "))
+
+    elif kmd == "åpne":
+        def åpne_fil(fil):
+            #Bruker platform modulen her da os.name ikke differensierer mellom MacOS og Linux
+            #https://chatgpt.com/share/be7f8a4d-db2b-4706-921e-287a30a15bf9
+            #https://docs.python.org/3/library/subprocess.html
+            try:
+                if platform.system() == 'Windows':
+                    os.startfile(fil)
+                elif platform.system() == 'Darwin':   # MacOS
+                    subprocess.run(["open", fil], check=True)
+                else:                                 # Linux
+                    subprocess.run(["xdg-open", fil], check=True)
+            except Exception as e:
+                print(f"Klarer ikke åpne fil: {e}")
 
 
-#------Kommandoer-------------------------------------------------------------
+        åpne_fil(input("Hvilken fil vil du åpne? >> "))
 
-kommandoer = {
-    "vistid": vistid,
-    "vismappe": vismappe,
-    "visfiler": visfiler,
-    "byttmappe": byttmappe,
-    "hvorlenge": hvorlenge,
-    "om": om,
-    "vismiljø": vismiljø,
-    "visbrukernavn": visbrukernavn,
-    "vispath": vispath,
-    "nyprompt": nyprompt,
-    "kakeplanleger": kakeplanlegger,
-    "statiskboks": statiskboks,
-    "dynamiskboks": dynamiskboks,
-    "åpenboks": åpenboks,
-    "rombe": rombe,
-    "seil": seil,
-    "pyramide": pyramide,
-    "innafor": innafor,
-    "visfiler2": visfiler2,
-    "regnut": regnut,
-    "finn": finn,
-    "finnprogram": finnprogram,
-    "vismiljø2": vismiljø2,
-    "vispath2": vispath2,
-    "åpne": åpne,
-    "hjelp": hjelp,
-    "avslutt": avslutt,
-    "p": kjør_forrige,
-}
+    elif kmd == "finn":
+        def vistreff(søketekst, søkemappe):
+            org_pos = os.getcwd()  #lagrer original posisjon
+            os.chdir(søkemappe)    #cd inn i søkemappe i tilfelle bruker skriver relativ sti istedenfor absolutt.
+            mapper = os.listdir()
+            if søketekst in mapper:  #sjekk om fil er i nåværende mappe
+                print(os.getcwd() + ("/" if os.name != "nt" else "\\") + søketekst)
+                return
+            for mappe in mapper:     #rekursivt sjekk alle undermapper.
+                if os.path.isdir(mappe):
+                    vistreff(søketekst, mappe)
+            os.chdir(org_pos)
 
-#------Hovedprogram---------------------------------------------------------------
+        #Ingen tilgang på jobbmaskina, men på den private Linux laptopen min så funker det i alle fall : )
+        try:
+            vistreff(input("Filnavn: >> "), input("Startmappe: >> "))
+        except PermissionError:
+            print("Ingen tilgang")
 
-if __name__ == "__main__":
-    while True:
-        global kommando
-        kommando = input(prompt)
-        if kommando in kommandoer:
-            kommandoer[kommando]()
-        forrige_kmd = kommando
+
+    else:
+        print("Ukjent kommando")
+        print("Skriv 'hjelp' for å se tilgjengelige kommandoer")
