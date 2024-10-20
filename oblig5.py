@@ -12,40 +12,55 @@ import subprocess
 
 start = time.perf_counter()
 
-print("Velkommen til Mitt Skall v0.02")
+#les loggfil
+def les_loggfil():
+    lest = 0
+    godkjent = 0
+    leser = open("mittskall.log", "r")
+    for linje in leser:
+        lest += 1
+        try: tidspunkt, kommando = linje.rstrip().split(",")
+        except ValueError: 
+            print(f"les_loggfil: feil antall felt på linje {lest}")
+            continue
+        try: 
+            print(f"les_loggfil: leste inn linje nr. {lest} :  {float(tidspunkt)} {str(kommando)}")
+            godkjent += 1
+        except Exception as e: print(f"les_loggfil: feil type i tidspunkt/kommando på linje {lest}")
+    print(f"Antall linjer lest inn er {lest} - Antall kommandoer er {godkjent}")
+    leser.close()
+
+les_loggfil()
+
+print("Velkommen til Mitt Skall v0.05")
 kmd = ""
 prompt = ">> "
 forrige_kmd = ""
+ant_kmd = 0
 #Resett logg fil
-logg = open("mittskall.log", "w")
-logg.write("")
-logg.close()
+#logg = open("mittskall.log", "w")
+#logg.write("")
+#logg.close()
 
 while kmd != "avslutt":
     kmd = input(prompt)
+    ant_kmd += 1
 
     #Åpne/opprett loggfil og appender tidspunkt + kommando
     #https://www.w3schools.com/python/python_file_write.asp
     logg = open("mittskall.log", "a")
-    logg.write(f"{time.time()} {kmd}\n")
+    logg.write(f"{time.time()}, {kmd}\n")
     logg.close()
 
     if kmd == "p" and forrige_kmd != "":
         kmd = forrige_kmd
         print("Utfører forrige kommando: " + kmd)
-
     forrige_kmd = kmd
 
     if kmd == "avslutt":
-        #https://www.w3schools.com/python/python_file_open.asp
-        log_antall = 0
         print("Takk og farvel!")
-        logg = open("mittskall.log", "r")
-        for _ in logg:
-            log_antall += 1
-        print(f"La til {log_antall} kommandoer i logfilen")
-        logg.close()
-
+        print(f"La til {ant_kmd} kommandoer i logfilen")
+        
     elif kmd == "vistid":
         print("Dato og klokkeslett er:")
         tid = datetime.datetime.now()
