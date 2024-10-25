@@ -43,6 +43,7 @@ kmdlog = []
 #logg = open("mittskall.log", "w")
 #logg.write("")
 #logg.close()
+kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]
 
 while kmd != "avslutt":
     kmd = input(prompt)
@@ -62,6 +63,14 @@ while kmd != "avslutt":
         kmd = forrige_kmd
         print("Utfører forrige kommando: " + kmd)
     forrige_kmd = kmd
+
+    #Currently working on this Mr Saar
+    if kmd.startswith("p") and kmd not in kjente_p_kmd:
+        try:
+            i = int(kmd.strip()[1:])
+            kmd = kmdlog[i]
+        except TypeError: "Kommando må være 'p' etterfulgt av et tall!"
+
 
     if kmd == "avslutt":
         print("Takk og farvel!")
