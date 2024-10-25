@@ -33,10 +33,12 @@ def les_loggfil():
 les_loggfil()
 
 print("Velkommen til Mitt Skall v0.05")
+#Initialiserer variabler
 kmd = ""
 prompt = ">> "
 forrige_kmd = ""
 ant_kmd = 0
+kmdlog = []
 #Resett logg fil
 #logg = open("mittskall.log", "w")
 #logg.write("")
@@ -46,11 +48,15 @@ while kmd != "avslutt":
     kmd = input(prompt)
     ant_kmd += 1
 
+    #Appender siste kommando til kmdlog
+    kmdlog.append({kmd : time.time()})
+
     #Åpne/opprett loggfil og appender tidspunkt + kommando
     #https://www.w3schools.com/python/python_file_write.asp
     logg = open("mittskall.log", "a")
     logg.write(f"{time.time()}, {kmd}\n")
     logg.close()
+
 
     if kmd == "p" and forrige_kmd != "":
         kmd = forrige_kmd
@@ -60,6 +66,18 @@ while kmd != "avslutt":
     if kmd == "avslutt":
         print("Takk og farvel!")
         print(f"La til {ant_kmd} kommandoer i logfilen")
+    
+    elif kmd == "pnyeste":
+        n = input("Hvor mange kommandoer vil du se? >> ")
+        try: n = int(n)
+        except TypeError: "Må være et tall!"
+        for linje in kmdlog[-n-1:-1]: print(linje)
+
+    elif kmd == "peldste":
+        n = input("Hvor mange kommandoer vil du se? >> ")
+        try: n = int(n)
+        except TypeError: "Må være et tall!"
+        for linje in kmdlog[0:n]: print(linje)
         
     elif kmd == "vistid":
         print("Dato og klokkeslett er:")
