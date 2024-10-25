@@ -69,12 +69,14 @@ while kmd != "avslutt":
     
     elif kmd == "pnyeste":
         n = input("Hvor mange kommandoer vil du se? >> ")
+        print(f"Viser de {n} nyeste kommandoene")
         try: n = int(n)
         except TypeError: "Må være et tall!"
         for linje in kmdlog[-n-1:-1]: print(linje)
 
     elif kmd == "peldste":
         n = input("Hvor mange kommandoer vil du se? >> ")
+        print(f"Viser de {n} eldste kommandoene")
         try: n = int(n)
         except TypeError: "Må være et tall!"
         for linje in kmdlog[0:n]: print(linje)
