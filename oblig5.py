@@ -8,6 +8,7 @@ import time
 #Brukt info fra: https://docs.python.org/3/library/time.html#time.perf_counter
 import platform
 import subprocess
+import re
 
 
 start = time.perf_counter()
@@ -43,14 +44,17 @@ kmdlog = []
 #logg = open("mittskall.log", "w")
 #logg.write("")
 #logg.close()
-kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]
+#kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]
 
 while kmd != "avslutt":
     kmd = input(prompt)
     ant_kmd += 1
 
     #Appender siste kommando til kmdlog
-    kmdlog.append({kmd : time.time()})
+    kmdlog.append({
+        "kommando": kmd,
+        "tidspunkt": time.time(),
+    })
 
     #Åpne/opprett loggfil og appender tidspunkt + kommando
     #https://www.w3schools.com/python/python_file_write.asp
@@ -64,12 +68,14 @@ while kmd != "avslutt":
         print("Utfører forrige kommando: " + kmd)
     forrige_kmd = kmd
 
-    #Currently working on this Mr Saar
-    if kmd.startswith("p") and kmd not in kjente_p_kmd:
-        try:
-            i = int(kmd.strip()[1:])
-            kmd = kmdlog[i]
-        except TypeError: "Kommando må være 'p' etterfulgt av et tall!"
+    #https://pythex.org/  veldig kul regex tester
+    #https://www.w3schools.com/python/python_regex.asp
+    #https://chatgpt.com/share/671cb13c-8d28-8008-8498-dc7eaa8f527f
+    match = re.search(r"^p\s*(-?\d)$", kmd)
+    if match:
+        kmd = kmdlog[int(match.groups()[0])]["kommando"]
+        print("Utfører kommando: " + kmd)
+    forrige_kmd = kmd
 
 
     if kmd == "avslutt":
@@ -77,18 +83,25 @@ while kmd != "avslutt":
         print(f"La til {ant_kmd} kommandoer i logfilen")
     
     elif kmd == "pnyeste":
+        #https://stackoverflow.com/questions/529424/traverse-a-list-in-reverse-order-in-python
         n = input("Hvor mange kommandoer vil du se? >> ")
         print(f"Viser de {n} nyeste kommandoene")
         try: n = int(n)
         except TypeError: "Må være et tall!"
-        for linje in kmdlog[-n-1:-1]: print(linje)
+        index = len(kmdlog) - 1    # -1 her da 'pnyeste' også blir lagt til listen
+        for linje in reversed(kmdlog[-n-1:-1]):   # reverserer lista så vi kan iterere fra bunnen av
+            print(f"{index} {linje["kommando"]} : {linje['tidspunkt']}")
+            index -= 1     # trekker fra 1 hver loop for å simulere liste index. 
 
-    elif kmd == "peldste":
+    elif kmd == "peldste":         #samme som 'pnyeste', men vi starter på toppen av lista
         n = input("Hvor mange kommandoer vil du se? >> ")
         print(f"Viser de {n} eldste kommandoene")
         try: n = int(n)
         except TypeError: "Må være et tall!"
-        for linje in kmdlog[0:n]: print(linje)
+        index = 0
+        for linje in kmdlog[0:n]:
+            print(f"{index} {linje["kommando"]} : {linje["tidspunkt"]}")
+            index += 1
         
     elif kmd == "vistid":
         print("Dato og klokkeslett er:")
@@ -100,7 +113,7 @@ while kmd != "avslutt":
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: ")
-        print("om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, ")
+        print("om, hjelp, vistid, vismappe, byttmappe, visfiler, vismiljø, peldste, pnyeste ")
         print("visbrukernavn, vispath, nyprompt, statiskboks, dynamiskboks, åpenboks, rombe, seil, pyramide, ")
         print("innafor, visfiler2, regnut, vismiljø2, vispath2, finnprogram, åpne, finn")
         print("\nFor å avslutte dette programmet, skriv 'avslutt' eller 'p' for å kjøre forrige kommando")
