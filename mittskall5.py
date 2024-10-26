@@ -88,7 +88,7 @@ while kmd != "avslutt":
         print(f"Viser de {n} nyeste kommandoene")
         try: n = int(n)
         except TypeError: "Må være et tall!"
-        index = len(kmdlog) - 1    # -1 her da 'pnyeste' også blir lagt til listen
+        index = len(kmdlog) - 2    # -2 her da 'pnyeste' også blir lagt til listen
         for linje in reversed(kmdlog[-n-1:-1]):   # reverserer lista så vi kan iterere fra bunnen av
             print(f"{index} {linje["kommando"]} : {linje['tidspunkt']}")
             index -= 1     # trekker fra 1 hver loop for å simulere liste index. 
