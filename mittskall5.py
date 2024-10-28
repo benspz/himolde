@@ -11,8 +11,9 @@ import subprocess
 import re
 
 
-start = time.perf_counter()
-try: logg = open("mittskall.log", "x")
+start = time.perf_counter()  #Setter startid for programmet
+
+try: logg = open("mittskall.log", "x")  #Oppretter mittskall.log hvis den ikke eksisterer
 except FileExistsError: pass
 
 #les loggfil
