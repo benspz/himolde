@@ -76,7 +76,7 @@ while kmd != "avslutt":
     #https://pythex.org/  veldig kul regex tester
     #https://www.w3schools.com/python/python_regex.asp
     #https://chatgpt.com/share/671cb13c-8d28-8008-8498-dc7eaa8f527f
-    match = re.search(r"^p\s*(-?\d)$", kmd)
+    match = re.search(r"^p\s*(-?\d+)$", kmd)
     if match:
         kmd = kmdlog[int(match.groups()[0])]["kommando"]
         print("Utfører kommando: " + kmd)
