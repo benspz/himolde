@@ -12,6 +12,8 @@ import re
 
 
 start = time.perf_counter()
+try: logg = open("mittskall.log", "x")
+except FileExistsError: pass
 
 #les loggfil
 def les_loggfil():
