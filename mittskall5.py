@@ -17,7 +17,8 @@ start = time.perf_counter()
 def les_loggfil():
     lest = 0
     godkjent = 0
-    leser = open("mittskall.log", "r")
+    # https://chatgpt.com/share/671fd77c-12e8-8008-9e4b-f206b1eef3c4
+    leser = open("mittskall.log", "r", encoding="ISO-8859-1")
     for linje in leser:
         lest += 1
         try: tidspunkt, kommando = linje.rstrip().split(",")
@@ -44,7 +45,7 @@ kmdlog = []
 #logg = open("mittskall.log", "w")
 #logg.write("")
 #logg.close()
-#kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]
+#kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]    <- Metoden jeg brukte for p "n" før Regex
 
 while kmd != "avslutt":
     kmd = input(prompt)
@@ -90,7 +91,7 @@ while kmd != "avslutt":
         except TypeError: "Må være et tall!"
         index = len(kmdlog) - 2    # -2 her da 'pnyeste' også blir lagt til listen
         for linje in reversed(kmdlog[-n-1:-1]):   # reverserer lista så vi kan iterere fra bunnen av
-            print(f"{index} {linje["kommando"]} : {linje['tidspunkt']}")
+            print(f"{index} {linje['kommando']} : {linje['tidspunkt']}")
             index -= 1     # trekker fra 1 hver loop for å simulere liste index. 
 
     elif kmd == "peldste":         #samme som 'pnyeste', men vi starter på toppen av lista
@@ -100,7 +101,7 @@ while kmd != "avslutt":
         except TypeError: "Må være et tall!"
         index = 0
         for linje in kmdlog[0:n]:
-            print(f"{index} {linje["kommando"]} : {linje["tidspunkt"]}")
+            print(f"{index} {linje['kommando']} : {linje['tidspunkt']}")
             index += 1
         
     elif kmd == "vistid":
@@ -109,7 +110,7 @@ while kmd != "avslutt":
         print(tid)
 
     elif kmd == "om":
-        print("mittskall.py av Benjamin Espeseth v0.02 September 2024")
+        print("mittskall.py av Benjamin Espeseth v0.05 September 2024")
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: ")
