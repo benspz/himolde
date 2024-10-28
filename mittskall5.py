@@ -15,19 +15,20 @@ start = time.perf_counter()
 
 #les loggfil
 def les_loggfil():
-    lest = 0
+    lest = 0     #Initialiserer tellere
     godkjent = 0
     # https://chatgpt.com/share/671fd77c-12e8-8008-9e4b-f206b1eef3c4
-    leser = open("mittskall.log", "r", encoding="ISO-8859-1")
-    for linje in leser:
-        lest += 1
+    leser = open("mittskall.log", "r", encoding="ISO-8859-1")  #åpner loggfil i lesemodus
+    for linje in leser:   #leser loggfil linje for linje og sjekker om det er gyldige
+        lest += 1    #linjeteller
+        # splitter hver linje på "," og fjerner whitespace fra høgre
         try: tidspunkt, kommando = linje.rstrip().split(",")
-        except ValueError: 
+        except ValueError:  # ValueError hvis det er for mange input i loggfila på ei linje
             print(f"les_loggfil: feil antall felt på linje {lest}")
             continue
         try: 
             print(f"les_loggfil: leste inn linje nr. {lest} :  {float(tidspunkt)} {str(kommando)}")
-            godkjent += 1
+            godkjent += 1  #teller antall kommandoer uten error i loggfil
         except Exception as e: print(f"les_loggfil: feil type i tidspunkt/kommando på linje {lest}")
     print(f"Antall linjer lest inn er {lest} - Antall kommandoer er {godkjent}")
     leser.close()
