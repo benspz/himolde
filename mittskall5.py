@@ -1,4 +1,4 @@
-# IBE152 H24 Oblig 2
+# IBE152 H24 Oblig 5
 # Skrevet av Benjamin Espeseth
 
 import datetime
@@ -11,22 +11,27 @@ import subprocess
 import re
 
 
-start = time.perf_counter()
+start = time.perf_counter()  #Setter startid for programmet
+
+try: logg = open("mittskall.log", "x")  #Oppretter mittskall.log hvis den ikke eksisterer
+except FileExistsError: pass
 
 #les loggfil
 def les_loggfil():
-    lest = 0
+    lest = 0     #Initialiserer tellere
     godkjent = 0
-    leser = open("mittskall.log", "r")
-    for linje in leser:
-        lest += 1
+    # https://chatgpt.com/share/671fd77c-12e8-8008-9e4b-f206b1eef3c4
+    leser = open("mittskall.log", "r", encoding="ISO-8859-1")  #åpner loggfil i lesemodus
+    for linje in leser:   #leser loggfil linje for linje og sjekker om det er gyldige
+        lest += 1    #linjeteller
+        # splitter hver linje på "," og fjerner whitespace fra høgre
         try: tidspunkt, kommando = linje.rstrip().split(",")
-        except ValueError: 
+        except ValueError:  # ValueError hvis det er for mange input i loggfila på ei linje
             print(f"les_loggfil: feil antall felt på linje {lest}")
             continue
         try: 
             print(f"les_loggfil: leste inn linje nr. {lest} :  {float(tidspunkt)} {str(kommando)}")
-            godkjent += 1
+            godkjent += 1  #teller antall kommandoer uten error i loggfil
         except Exception as e: print(f"les_loggfil: feil type i tidspunkt/kommando på linje {lest}")
     print(f"Antall linjer lest inn er {lest} - Antall kommandoer er {godkjent}")
     leser.close()
@@ -44,7 +49,7 @@ kmdlog = []
 #logg = open("mittskall.log", "w")
 #logg.write("")
 #logg.close()
-#kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]
+#kjente_p_kmd = ["p", "pnyeste", "peldste", "pyramide"]    <- Metoden jeg brukte for p "n" før Regex
 
 while kmd != "avslutt":
     kmd = input(prompt)
@@ -71,7 +76,7 @@ while kmd != "avslutt":
     #https://pythex.org/  veldig kul regex tester
     #https://www.w3schools.com/python/python_regex.asp
     #https://chatgpt.com/share/671cb13c-8d28-8008-8498-dc7eaa8f527f
-    match = re.search(r"^p\s*(-?\d)$", kmd)
+    match = re.search(r"^p\s*(-?\d+)$", kmd)
     if match:
         kmd = kmdlog[int(match.groups()[0])]["kommando"]
         print("Utfører kommando: " + kmd)
@@ -90,7 +95,7 @@ while kmd != "avslutt":
         except TypeError: "Må være et tall!"
         index = len(kmdlog) - 2    # -2 her da 'pnyeste' også blir lagt til listen
         for linje in reversed(kmdlog[-n-1:-1]):   # reverserer lista så vi kan iterere fra bunnen av
-            print(f"{index} {linje["kommando"]} : {linje['tidspunkt']}")
+            print(f"{index} {linje['kommando']} : {linje['tidspunkt']}")
             index -= 1     # trekker fra 1 hver loop for å simulere liste index. 
 
     elif kmd == "peldste":         #samme som 'pnyeste', men vi starter på toppen av lista
@@ -100,7 +105,7 @@ while kmd != "avslutt":
         except TypeError: "Må være et tall!"
         index = 0
         for linje in kmdlog[0:n]:
-            print(f"{index} {linje["kommando"]} : {linje["tidspunkt"]}")
+            print(f"{index} {linje['kommando']} : {linje['tidspunkt']}")
             index += 1
         
     elif kmd == "vistid":
@@ -109,7 +114,7 @@ while kmd != "avslutt":
         print(tid)
 
     elif kmd == "om":
-        print("mittskall.py av Benjamin Espeseth v0.02 September 2024")
+        print("mittskall.py av Benjamin Espeseth v0.05 September 2024")
 
     elif kmd == "hjelp":
         print("Tilgjengelige kommandoer er: ")
