@@ -40,7 +40,7 @@ def draw_pie(n, radius) -> None:
         draw_triangle(radius,  angle/2)
         turtle.left(angle)
 
-draw_pie(15, 50)
+draw_pie(8, 50)
 
 
 turtle.done()
