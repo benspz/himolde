@@ -3,9 +3,9 @@
 
 import datetime
 import os
-#Brukt info fra: https://www.w3schools.com/python/module_os.asp
+# Brukt info fra: https://www.w3schools.com/python/module_os.asp
 import time
-#Brukt info fra: https://docs.python.org/3/library/time.html#time.perf_counter
+# Brukt info fra: https://docs.python.org/3/library/time.html#time.perf_counter
 import platform
 import subprocess
 
@@ -74,7 +74,8 @@ while kmd != "avslutt":
         timer = int(totaltid) // 3600
         minutter = int((totaltid % 3600) // 60)
         sekunder = int(totaltid % 60)
-        print("Dette programmet har kjørt i", timer, "timer", minutter, "minutter og", sekunder, "sekunder.")
+        print("Dette programmet har kjørt i", timer, "timer",
+              minutter, "minutter og", sekunder, "sekunder.")
 
     elif kmd == "kakeplanlegger":
         gjester = input("Hvor mange gjester kommer? >> ")
@@ -86,6 +87,7 @@ while kmd != "avslutt":
 
     elif kmd == "dynamiskboks":
         n = input("Oppgi antall linjer/kolonner >> ")
+
         def tegnboks():
             x = input("Velg tegn >> ")
             for i in range(int(n)):
@@ -133,32 +135,39 @@ while kmd != "avslutt":
         høyde = input("Velg høyde >> ")
         pyramide(tegn, int(høyde))
 
-    elif kmd == "innafor":           #Bruker Try Except Else istedenfor erTall() for å unngå error.
-        def innafor(x, fra, til):    #erTall() blir overflødig da vi må caste input() før vi kaller på innafor()
+    elif kmd == "innafor":  # Bruker Try Except Else istedenfor erTall() for å unngå error.
+        # erTall() blir overflødig da vi må caste input() før vi kaller på innafor()
+        def innafor(x, fra, til):
             if fra <= til:  # Stigende
                 return fra <= x <= til
             elif fra >= til:  # Fallende
                 return til <= x <= fra
 
-        try: x, fra, til = float(input("Velg tall >> ")), float(input("Velg tall >> ")), float(input("Velg tall >> "))
-        except ValueError: print("Kun numeriske verdier støttet!")
+        try:
+            x, fra, til = float(input("Velg tall >> ")), float(
+                input("Velg tall >> ")), float(input("Velg tall >> "))
+        except ValueError:
+            print("Kun numeriske verdier støttet!")
         else:
-            if innafor(x, fra, til): print("Innafor")
-            else: print("Ikke innafor")
+            if innafor(x, fra, til):
+                print("Innafor")
+            else:
+                print("Ikke innafor")
 
     elif kmd == "visfiler2":
         filer = os.listdir()
-        #filer = [f"Item {i + 1}" for i in range(50)]
-        #https://www.w3schools.com/python/python_lists_comprehension.asp
-        #brukt for testing da jeg ikke har noen mapper med så mange filer : )
+        # filer = [f"Item {i + 1}" for i in range(50)]
+        # https://www.w3schools.com/python/python_lists_comprehension.asp
+        # brukt for testing da jeg ikke har noen mapper med så mange filer : )
         antall = 0
         nytt_antall = 0
         while antall < len(filer):
             print(filer[antall])
             antall += 1
-            if antall == nytt_antall + 20: # Stopp etter 20 filer
+            if antall == nytt_antall + 20:  # Stopp etter 20 filer
                 nytt_antall = antall    # Legg til 20, slik at neste gang stopper den på 40
-                svar = input(f"\nHar vist {antall} filer av {len(filer)}, vil du fortsette? (y/n) >> ")
+                svar = input(f"\nHar vist {antall} filer av {
+                             len(filer)}, vil du fortsette? (y/n) >> ")
                 if svar.lower() == "n":
                     break
             elif antall >= len(filer):
@@ -167,16 +176,20 @@ while kmd != "avslutt":
 
     elif kmd == "regnut":
         uttrykk: str = input("Oppgi  uttrykk: >> ")
-        try: print(eval(uttrykk))
-        except NameError: print("Kun numeriske verdier støttet")
+        try:
+            print(eval(uttrykk))
+        except NameError:
+            print("Kun numeriske verdier støttet")
 
     elif kmd == "vismiljø2":
         for key in os.environ:
-            print(f"{key}: {os.environ[key]}")  #Printer ut alle key:value par i os.environ
+            # Printer ut alle key:value par i os.environ
+            print(f"{key}: {os.environ[key]}")
 
     elif kmd == "vispath2":
-        #Bruker os.name for å sjekke om det er Windows eller Mac/Linux.
-        for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"): print(mappe)
+        # Bruker os.name for å sjekke om det er Windows eller Mac/Linux.
+        for mappe in os.environ['PATH'].split(";" if os.name == 'nt' else ":"):
+            print(mappe)
 
     elif kmd == "finnprogram":
         def finn_program(program):
@@ -188,21 +201,22 @@ while kmd != "avslutt":
                     if program in os.listdir(mappe):
                         print(f"{program} funnet i: {mappe}")
                         funnet = True
-                        #break
-                        #Brøyt loop originalt her da den alltid la til "fant ikke program" på slutten.
-                        #Men endte opp med en "funnet" tag som sjekker om en eller flere har blitt funnet.
+                        # break
+                        # Brøyt loop originalt her da den alltid la til "fant ikke program" på slutten.
+                        # Men endte opp med en "funnet" tag som sjekker om en eller flere har blitt funnet.
                 except FileNotFoundError:
                     continue
             else:
-                if not funnet: print("Fant ikke program")
+                if not funnet:
+                    print("Fant ikke program")
 
         finn_program(input("Hvilket program leter du etter? >> "))
 
     elif kmd == "åpne":
         def åpne_fil(fil):
-            #Bruker platform modulen her da os.name ikke differensierer mellom MacOS og Linux
-            #https://chatgpt.com/share/be7f8a4d-db2b-4706-921e-287a30a15bf9
-            #https://docs.python.org/3/library/subprocess.html
+            # Bruker platform modulen her da os.name ikke differensierer mellom MacOS og Linux
+            # https://chatgpt.com/share/be7f8a4d-db2b-4706-921e-287a30a15bf9
+            # https://docs.python.org/3/library/subprocess.html
             try:
                 if platform.system() == 'Windows':
                     os.startfile(fil)
@@ -213,28 +227,27 @@ while kmd != "avslutt":
             except Exception as e:
                 print(f"Klarer ikke åpne fil: {e}")
 
-
         åpne_fil(input("Hvilken fil vil du åpne? >> "))
 
     elif kmd == "finn":
         def vistreff(søketekst, søkemappe):
-            org_pos = os.getcwd()  #lagrer original posisjon
-            os.chdir(søkemappe)    #cd inn i søkemappe i tilfelle bruker skriver relativ sti istedenfor absolutt.
+            org_pos = os.getcwd()  # lagrer original posisjon
+            # cd inn i søkemappe i tilfelle bruker skriver relativ sti istedenfor absolutt.
+            os.chdir(søkemappe)
             mapper = os.listdir()
-            if søketekst in mapper:  #sjekk om fil er i nåværende mappe
+            if søketekst in mapper:  # sjekk om fil er i nåværende mappe
                 print(os.getcwd() + ("/" if os.name != "nt" else "\\") + søketekst)
                 return
-            for mappe in mapper:     #rekursivt sjekk alle undermapper.
+            for mappe in mapper:  # rekursivt sjekk alle undermapper.
                 if os.path.isdir(mappe):
                     vistreff(søketekst, mappe)
             os.chdir(org_pos)
 
-        #Ingen tilgang på jobbmaskina, men på den private Linux laptopen min så funker det i alle fall : )
+        # Ingen tilgang på jobbmaskina, men på den private Linux laptopen min så funker det i alle fall : )
         try:
             vistreff(input("Filnavn: >> "), input("Startmappe: >> "))
         except PermissionError:
             print("Ingen tilgang")
-
 
     else:
         print("Ukjent kommando")

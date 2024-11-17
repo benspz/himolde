@@ -1,12 +1,16 @@
 def value_counts(word: str) -> dict:
     counter = dict()
     for letter in word:
-        if letter in counter.keys():
-            counter[letter] += 1
-            continue
-        counter[letter] = 1
+        counter[letter] = counter.get(letter, 0) + 1
     return counter
 
 
-print(value_counts("brontosaurus"))
+def has_duplicates(word: str) -> bool:
+    for value in value_counts(word).values():
+        if value > 1:
+            return True
+    return False
 
+print(value_counts("brontosaurus"))
+print(has_duplicates("brontosaurus"))
+print(has_duplicates("unpredictably"))
